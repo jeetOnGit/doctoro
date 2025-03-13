@@ -4,40 +4,40 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex justify-between py-10">
       <div className="w-[40%]">
-        <img className="w-[70px]" src={assets.logo} alt="" />
-        <p className="text-xs">
+        <img className="w-[60px]" src={assets.logo} alt="" />
+        <p className="text-xs text-[#5c5c5c]">
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever
           since the 1500s, when an unknown printer took a galley of type and
           scrambled it to make a type specimen book.{" "}
         </p>
       </div>
-      <div>
+      <div className="text-[#5c5c5c]">
         <ul>
-          <li>COMPANY</li>
-          <li>
+          <li className="text-black font-medium">COMPANY</li>
+          <li className="text-sm">
             <Link to="/">Home</Link>
           </li>
-          <li>
+          <li className="text-sm">
             <Link to="/about">About us</Link>
           </li>
-          <li>
+          <li className="text-sm">
             <Link to="/">Delivery</Link>
           </li>
-          <li>
+          <li className="text-sm">
             <Link to="/">Privacy policy</Link>
           </li>
         </ul>
       </div>
-      <div>
+      <div className="text-[#5c5c5c]">
         <ul>
-          <li>GET IN TOUCH</li>
-          <li>
+          <li className="text-black font-medium">GET IN TOUCH</li>
+          <li className="text-sm">
             +0-000-000-000
           </li>
-          <li>
+          <li className="text-sm">
             greatstackdev@gmail.com
           </li>
   
