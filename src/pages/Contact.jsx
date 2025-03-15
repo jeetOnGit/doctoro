@@ -6,12 +6,12 @@ const Contact = () => {
     <div>
       <section className="aboutUs py-10">
         <div className="sectionHeading mx-auto text-center w-[50%]">
-          <h3 className="text-[1.6rem] font-medium text-[#5c5c5c]">
+          <h3 className="text-[1.6rem] font-medium text-[#5c5c5c] leading-normal">
             CONTACT <span className="text-[#374151]">US</span>
           </h3>
         </div>
 
-        <div className="flex gap-10 justify-center py-8">
+        <div className="flex gap-10 justify-center py-8 max-[590px]:flex-col">
           <div className="w-[30%]">
             <img src={assets.contact_image} alt="" />
           </div>
@@ -25,10 +25,10 @@ const Contact = () => {
             <p className="text-black font-semibold">
               Tel: (000) 000-0000
               <br />
-              Email: greatstackdev@gmail.com
+              Email: demoJeet@gmail.com
             </p>
 
-            <p className="text-[1.4rem]">CAREERS AT PRESCRIPTO</p>
+            <p className="text-[1.4rem] leading-normal">CAREERS AT DOCTORO</p>
             <p>Learn more about our teams and job openings.</p>
           </div>
         </div>

@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div className="flex justify-between py-10">
-      <div className="w-[40%]">
+    <div className="flex justify-between py-10   max-[800px]:items-center max-[800px]:gap-5 max-[800px]:w-fit max-[800px]:flex-wrap">
+      <div className="w-[40%] max-[800px]:w-fit">
         <img className="w-[60px]" src={assets.logo} alt="" />
         <p className="text-xs text-[#5c5c5c]">
           Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -14,7 +14,7 @@ const Footer = () => {
           scrambled it to make a type specimen book.{" "}
         </p>
       </div>
-      <div className="text-[#5c5c5c]">
+      <div className="text-[#5c5c5c] ">
         <ul>
           <li className="text-black font-medium">COMPANY</li>
           <li className="text-sm">
