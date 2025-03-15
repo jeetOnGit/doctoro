@@ -17,7 +17,6 @@ const Contact = () => {
           </div>
           <div className="text-xs w-[30%] flex flex-col gap-6 justify-center text-[#5c5c5c]">
             <p className="text-[1.4rem]">OUR OFFICE</p>
-
             <p>
               00000 Willms Station Suite 000, <br /> Washington, USA
             </p>

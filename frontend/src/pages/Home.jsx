@@ -26,7 +26,7 @@ const Home = () => {
       </section>
       
       <section className='specialist py-16'>
-        <div className="sectionHeading mx-auto text-center w-[50%]">
+        <div className="sectionHeading mx-auto text-center w-[50%] max-[560px]:w-[90%]">
           <h3 className='text-[1.6rem] font-medium'>Find by Speciality</h3>
           <p className='text-[0.8rem]'>Simply browse through our extensive list of trusted doctors, schedule your appointment hassle-free.</p>
         </div>
@@ -44,7 +44,7 @@ const Home = () => {
       </section>
 
       <section className='doctors'>
-        <div className="sectionHeading mx-auto text-center w-[50%]">
+        <div className="sectionHeading mx-auto text-center w-[50%] max-[560px]:w-[90%]">
           <h3 className='text-[1.6rem] font-medium'>Top Doctors to Book</h3>
           <p className='text-[0.8rem]'>Simply browse through our extensive list of trusted doctors.</p>
         </div>

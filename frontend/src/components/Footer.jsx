@@ -38,7 +38,7 @@ const Footer = () => {
             +0-000-000-000
           </li>
           <li className="text-sm">
-            greatstackdev@gmail.com
+            demoJeet@gmail.com
           </li>
   
         </ul>
