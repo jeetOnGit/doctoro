@@ -1,29 +1,30 @@
 import validator from 'validator'
 import bcrypt from 'bcrypt'
-import {v2 as cloudinary} from 'cloudinary'
+import { v2 as cloudinary } from 'cloudinary'
 import doctorModel from '../models/doctorModel.js'
+import jwt from 'jsonwebtoken'
 
 // API for add doctors
 
-const addDoctor = async(req, res) =>{
+const addDoctor = async (req, res) => {
 
     try {
-        const { name, email, password, speciality, experience, degree, about, fees, address } = req.body; 
+        const { name, email, password, speciality, experience, degree, about, fees, address } = req.body;
         const imageFile = req.file
-        
+
         // check all details to be filled
         if (!name || !email || !password || !speciality || !experience || !degree || !about || !fees || !address) {
-            return res.json({success: false, message:"Missing Details"})
+            return res.json({ success: false, message: "Missing Details" })
         }
-        
+
         //validating email
         if (!validator.isEmail(email)) {
-            return res.json({success: false, message:"Enter a valid email"})
+            return res.json({ success: false, message: "Enter a valid email" })
         }
 
         //validating password
         if (!validator.isStrongPassword(password)) {
-            return res.json({success: false, message:"Weak password"})
+            return res.json({ success: false, message: "Weak password" })
         }
 
         // hasing password
@@ -31,17 +32,17 @@ const addDoctor = async(req, res) =>{
         const hashedPassword = await bcrypt.hash(password, salt)
 
         //upload image to DB
-        const imageUpload = await cloudinary.uploader.upload(imageFile.path, {resource_type:"image"})
+        const imageUpload = await cloudinary.uploader.upload(imageFile.path, { resource_type: "image" })
         const imgUrl = imageUpload.url
 
         // store the doctor data
-        const doctorData ={
+        const doctorData = {
             name,
             email,
             image: imgUrl,
             password: hashedPassword,
             degree,
-            speciality, 
+            speciality,
             experience,
             about,
             fees,
@@ -52,22 +53,40 @@ const addDoctor = async(req, res) =>{
         const newDoctor = new doctorModel(doctorData)
         await newDoctor.save()
 
-        res.json({success:true, message:"New doctor added"})
+        res.json({ success: true, message: "New doctor added" })
 
     } catch (error) {
         console.log(error);
-        
+
     }
 }
 
 // API for admin login
-const adminLogin = async(req,res) =>{
+const adminLogin = async (req, res) => {
     try {
-        
+        const { email, password } = req.body
+        if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+            const token = jwt.sign(email + password, process.env.JWT_SECRET)
+            res.json({ success: true, token })
+        } else {
+            res.json({ success: false, message: "invaild credentials" })
+        }
     } catch (error) {
         console.log(error);
-        res.json({success:false, message:error.message})
+        res.json({ success: false, message: error.message })
     }
 }
 
-export {addDoctor, adminLogin}
+// API for all doctors
+
+const allDoctors = async (req, res) => {
+    try {
+        const doctors = await doctorModel.find({}).select('-password')
+        res.json({ success: true, doctors })
+    } catch (error) {
+        res.json({success:false, message:error.message})
+    }
+
+}
+
+export { addDoctor, adminLogin, allDoctors }
