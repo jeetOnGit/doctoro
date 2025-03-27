@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { assets, specialityData, doctors } from '../assets/assets'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { AppContext } from '../context/AppContext'
 
 const Home = () => {
-
+  const {doctors} = useContext(AppContext)
+  const navigate = useNavigate()
   const firstTenDocs = doctors.slice(0, 10)
 
   
@@ -52,7 +54,7 @@ const Home = () => {
         <div className='flex gap-x-3 gap-y-[1.5rem] flex-wrap py-8 justify-center'>
           
           {firstTenDocs.map((doc) => (
-            <div className='w-[24%] border border-[#c9d8ff] rounded-lg hover:-translate-y-3 transition-all ease-in-out delay-75  max-[700px]:w-fit'>
+            <div key={doc._id} onClick={()=>navigate(`/appointment/${doc._id}`)} className='w-[24%] border border-[#c9d8ff] rounded-lg hover:-translate-y-3 transition-all ease-in-out delay-75  max-[700px]:w-fit'>
               <div className="img"><img className='bg-[#EAEFFF]' src={doc.image} alt="" /></div>
               <div className="details">
                 <ul className='py-3 px-2'>
