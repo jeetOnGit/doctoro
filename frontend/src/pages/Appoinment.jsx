@@ -1,17 +1,85 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useDeferredValue } from "react";
 import { useParams } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import { assets } from "../assets/assets";
+import RelatedDocs from "../components/RelatedDocs";
 
 const Appoinment = () => {
   const { docId } = useParams();
   const { doctors, currencySymbol } = useContext(AppContext);
+
   const [docInfo, setDocInfo] = useState(null);
+  const [docSlots, setDocSlots] = useState([])
+  const [slotIndex, setSlotIndex] = useState(0)
+  const [slotTime, setSlotTime] = useState('')
+  const daysofWeek = ['Mon', 'Tue', 'Wed', 'Thus', 'Fri', 'Sat', 'Sun']
+
+  const slotAvailable = async () => {
+    let today = new Date();
+    let slots = [];
+  
+    // If the time is after 10 PM, move to the next day
+    if (today.getHours() >= 22) {
+      today.setDate(today.getDate() + 1);
+      today.setHours(0, 0, 0, 0); // Reset time to midnight
+    }
+  
+    for (let i = 0; i < 7; i++) {
+      let currentDate = new Date(today);
+      currentDate.setDate(today.getDate() + i);
+  
+      let endTime = new Date();
+      endTime.setDate(today.getDate() + i);
+      endTime.setHours(21, 0, 0, 0);
+  
+      if (i === 0) {
+        // If it's today, check the current time
+        if (today.getHours() >= 22) {
+          continue; // Skip today and move to the next available date
+        }
+  
+        currentDate.setHours(currentDate.getHours() > 10 ? currentDate.getHours() + 1 : 10);
+        currentDate.setMinutes(currentDate.getMinutes() > 30 ? 30 : 0);
+      } else {
+        currentDate.setHours(10);
+        currentDate.setMinutes(0);
+      }
+  
+      let timeSlots = [];
+      while (currentDate < endTime) {
+        let formattedTime = currentDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  
+        timeSlots.push({
+          dateTime: new Date(currentDate),
+          time: formattedTime,
+        });
+  
+        currentDate.setMinutes(currentDate.getMinutes() + 30);
+      }
+  
+      slots.push(timeSlots);
+    }
+  
+    setDocSlots(slots);
+  };
+  
+  
 
   useEffect(() => {
     const docInfo = doctors.find((doc) => doc._id === docId);
     setDocInfo(docInfo);
   }, [doctors, docId]);
+
+  useEffect(()=>{
+    if (docInfo) {
+      slotAvailable();
+    }
+  },[docInfo])
+
+  // useEffect(()=>{
+  //   console.log(docSlots)
+  // },[docSlots])
+
 
   return (
     docInfo && (
@@ -45,6 +113,34 @@ const Appoinment = () => {
             <p className="text-gray-500 font-medium mt-4">Appointment Fee: {currencySymbol}{docInfo.fees}</p>
           </div>
         </div>
+
+        <div className="sm:ml-72 sm:pl-4 mt-4 font-medium text-gray-700">
+          <p>Booking Slots</p>
+          <div className="flex gap-3 items-center w-full mt-4 whitespace-nowrap scroll-smooth select-none no-scrollbar cursor-pointer">
+            {
+              docSlots.length && docSlots.map((item, index)=>(
+                <div onClick={()=>setSlotIndex(index)} className={`text-center py-6 min-w-16 rounded-full cursor-pointer ${slotIndex === index ? 'bg-[#5F6FFF] text-white' : 'border border-gray-300'}`} key={index}>
+                  <p>{item[1] && daysofWeek[item[1].dateTime.getDay()]}</p>
+                  <p>{item[1] && item[1].dateTime.getDate()}</p>
+                </div>
+              ))
+            }
+          </div>
+
+          <div className="flex items-center gap-3 w-full flex-wrap mt-4">
+            {docSlots.length && docSlots[slotIndex].map((item, index)=>(
+              <p onClick={()=>setSlotTime(item.time)} className={`text-sm font-light flex-shrink-0 px-5 py-2 rounded-full cursor-pointer ${item.time === slotTime ? 'bg-[#5F6FFF] text-white' : 'text-gray-400 border border-gray-300'}`}>
+                {item.time.toLowerCase()}
+              </p>
+            ))}
+          </div>
+
+          <button className="bg-[#5F6FFF] text-white text-sm font-light px-14 py-3 rounded-full my-6">Book a appointment</button>
+        </div>
+
+        {/* Realated Doctors List */}
+
+        <RelatedDocs docId={docId} speciality={docInfo.speciality} />
       </div>
     )
   );
