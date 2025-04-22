@@ -4,9 +4,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import { AppContext } from '../context/AppContext'
 
 const Home = () => {
-  const {doctors} = useContext(AppContext)
+  const { doctors, token } = useContext(AppContext);
   const navigate = useNavigate()
-  const firstTenDocs = localDocs.slice(0, 10)
+  const firstTenDocs = (token ? doctors : localDocs).slice(0, 10);
 
   
   return (
