@@ -1,16 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../context/AppContext'
 import { useNavigate } from 'react-router-dom'
+import {localDocs} from '../assets/assets'
+
 
 const RelatedDocs = ({docId, speciality}) => {
   const navigate = useNavigate()
 
-    const {doctors} = useContext(AppContext)
+    // const {doctors} = useContext(AppContext)
     const [relDocs, setRelDocs] = useState([])
 
     useEffect(()=>{
-      if (doctors.length > 0 && speciality) {
-        const doctorsData = doctors.filter((doc)=> doc.speciality === speciality && doc._id !== docId)
+      if (localDocs.length > 0 && speciality) {
+        const doctorsData = localDocs.filter((doc)=> doc.speciality === speciality && doc._id !== docId)
         setRelDocs(doctorsData)
       }
     },[docId,doctors,speciality])
