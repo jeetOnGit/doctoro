@@ -13,7 +13,7 @@ const Doctors = () => {
     <section className="doctors">
       <div className="flex gap-x-3 gap-y-[1.5rem] flex-wrap py-8 justify-center">
       {
-          displayDoctors.map((doc) => (
+          localDocs.map((doc) => (
             <div
               key={doc._id}
               onClick={() => navigate(`/appointment/${doc._id}`)}
