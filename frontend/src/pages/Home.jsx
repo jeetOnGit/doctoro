@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
-import { assets, specialityData, doctors } from '../assets/assets'
+import { assets, specialityData, localDocs } from '../assets/assets'
 import { Link, useNavigate } from 'react-router-dom'
 import { AppContext } from '../context/AppContext'
 
 const Home = () => {
   const {doctors} = useContext(AppContext)
   const navigate = useNavigate()
-  const firstTenDocs = doctors.slice(0, 10)
+  const firstTenDocs = localDocs.slice(0, 10)
 
   
   return (
