@@ -1,18 +1,18 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import {localDocs} from '../assets/assets'
-import { AppContext } from "../context/AppContext";
+// import { AppContext } from "../context/AppContext";
 const Doctors = () => {
   const navigate = useNavigate()
     // const { doctors } = useContext(AppContext);
-    const { doctors, token } = useContext(AppContext);
+    // const { doctors, token } = useContext(AppContext);
 
-    const displayDoctors = token ? doctors : localDocs; // ✅ switch source
+    // const displayDoctors = token ? doctors : localDocs; // ✅ switch source
   
   return (
     <section className="doctors">
       <div className="flex gap-x-3 gap-y-[1.5rem] flex-wrap py-8 justify-center">
-      {displayDoctors && displayDoctors.length > 0 ? (
+      {
           displayDoctors.map((doc) => (
             <div
               key={doc._id}
@@ -33,10 +33,7 @@ const Doctors = () => {
                 </ul>
               </div>
             </div>
-          ))
-        ) : (
-          <p>No doctors available.</p>
-        )}
+          ))}
       </div>
     </section>
   );
