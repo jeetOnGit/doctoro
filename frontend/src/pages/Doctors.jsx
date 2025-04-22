@@ -1,9 +1,12 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { AppContext } from "../context/AppContext";
+import {doctors} from '../assets/assets'
+// import { AppContext } from "../context/AppContext";
 const Doctors = () => {
   const navigate = useNavigate()
-    const { doctors } = useContext(AppContext);
+    // const { doctors } = useContext(AppContext);
+
+    
   
   return (
     <section className="doctors">
