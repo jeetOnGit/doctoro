@@ -8,8 +8,9 @@ const AppContextProvider = (props) => {
     const currencySymbol = "$"
     const backendUrl = import.meta.env.VITE_BACKEND_URL
     const [doctors, setDoctors] = useState([])
-    const [token, setToken] = useState('')
-
+    const [token, setToken] = useState(localStorage.getItem('token')? localStorage.getItem('token') : false)
+    const [userData, setUserData] = useState(false)
+    
     const getDoctorData = async(req, res) =>{
         try {
         const {data} = await axios.get(backendUrl + '/api/doctor/list')
@@ -26,17 +27,63 @@ const AppContextProvider = (props) => {
         }
     }
 
-    useEffect(()=>{
-        getDoctorData()
-    },[])
+    const loadUserData = async(req, res) =>{
+        try {
+            const {data} = await axios.get(backendUrl + '/api/user/get-user',{headers:{ Authorization: `Bearer ${token}`}})
+            if (data.success) {
+                setUserData(data.userData)
+            } else {
+                toast.error(data.message)
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error(error.message)   
+        }
+    }
+
+
+
+
     const value = {
         doctors,
         currencySymbol,
         backendUrl,
         getDoctorData,
         token,
-        setToken
+        setToken,
+        userData,
+        setUserData,
+        loadUserData
     }
+    useEffect(()=>{
+        getDoctorData()
+    },[])
+
+    // useEffect(()=>{
+    //     // console.log("Token is:", token);
+    //     if (token) {
+    //         loadUserData()
+    //     }else{
+    //         setUserData(false)
+    //     }
+    // },[token])
+
+
+    useEffect(() => {
+        if (token) {
+          loadUserData().catch(() => {
+            localStorage.removeItem('token');
+            setToken(false);
+            setUserData(false);
+            toast.error('Session expired. Please login again.');
+          });
+        } else {
+          setUserData(false);
+        }
+      }, [token]);
+
+
+
     return (
         <AppContext.Provider value={value}>
             {props.children}
