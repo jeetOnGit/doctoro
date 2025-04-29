@@ -59,14 +59,7 @@ const AppContextProvider = (props) => {
         getDoctorData()
     },[])
 
-    // useEffect(()=>{
-    //     // console.log("Token is:", token);
-    //     if (token) {
-    //         loadUserData()
-    //     }else{
-    //         setUserData(false)
-    //     }
-    // },[token])
+
 
 
     useEffect(() => {

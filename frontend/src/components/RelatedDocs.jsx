@@ -7,12 +7,12 @@ import {localDocs} from '../assets/assets'
 const RelatedDocs = ({docId, speciality}) => {
   const navigate = useNavigate()
 
-    // const {doctors} = useContext(AppContext)
+    const {doctors} = useContext(AppContext)
     const [relDocs, setRelDocs] = useState([])
 
     useEffect(()=>{
-      if (localDocs.length > 0 && speciality) {
-        const doctorsData = localDocs.filter((doc)=> doc.speciality === speciality && doc._id !== docId)
+      if (doctors.length > 0 && speciality) {
+        const doctorsData = doctors.filter((doc)=> doc.speciality === speciality && doc._id !== docId)
         setRelDocs(doctorsData)
       }
     },[docId,doctors,speciality])

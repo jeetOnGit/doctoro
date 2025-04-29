@@ -1,22 +1,26 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import {localDocs} from '../assets/assets'
-// import { AppContext } from "../context/AppContext";
+// import {localDocs} from '../assets/assets'
+import { AppContext } from "../context/AppContext";
 const Doctors = () => {
   const navigate = useNavigate()
-    // const { doctors } = useContext(AppContext);
-    // const { doctors, token } = useContext(AppContext);
-
-    // const displayDoctors = token ? doctors : localDocs; // ✅ switch source
+    const { doctors } = useContext(AppContext);
   
   return (
     <section className="doctors">
       <div className="flex gap-x-3 gap-y-[1.5rem] flex-wrap py-8 justify-center">
       {
-          localDocs.map((doc) => (
+          doctors.map((doc) => (
             <div
               key={doc._id}
-              onClick={() => navigate(`/appointment/${doc._id}`)}
+              onClick={() => {
+                const token = localStorage.getItem('token');
+                if (token) {
+                  navigate(`/appointment/${doc._id}`);
+                } else {
+                  navigate('/login');
+                }
+              }}
               className="w-[24%] border border-[#c9d8ff] rounded-lg hover:-translate-y-3 transition-all ease-in-out delay-75 max-[700px]:w-fit"
             >
               <div className="img">
