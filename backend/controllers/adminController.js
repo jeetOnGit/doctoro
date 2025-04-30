@@ -4,6 +4,7 @@ import { v2 as cloudinary } from 'cloudinary'
 import doctorModel from '../models/doctorModel.js'
 import jwt from 'jsonwebtoken'
 import appointmentModel from '../models/appointmentModel.js'
+import userModel from '../models/userModel.js'
 
 // API for add doctors
 
@@ -105,4 +106,50 @@ const appointmentsAdmin = async(req,res) =>{
     }
 }
 
-export { addDoctor, adminLogin, allDoctors, appointmentsAdmin }
+// API to cancel appointment
+
+const appointmentCancel = async(req, res) =>{
+    try {
+        const {appointmentId} = req.body
+        const appointmentData = await appointmentModel.findById(appointmentId)
+
+        await appointmentModel.findByIdAndUpdate(appointmentId, {cancelled:true})
+
+        // releasing doctor slot
+        const {docId, slotDate, slotTime} = appointmentData
+        const doctorData = await doctorModel.findById(docId)
+
+        let slots_booked = doctorData.slots_booked
+        slots_booked[slotDate] = slots_booked[slotDate].filter((e) => e !== slotTime)
+         
+        await doctorModel.findByIdAndUpdate(docId, {slots_booked})
+
+        res.json({success:true, message:"Appointment Cancelled"})
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: error.message })
+    }
+}
+
+// API to get dashboard data
+
+const adminDashboard = async(req, res) =>{
+    try {
+        const doctors = await doctorModel.find({})
+        const users = await userModel.find({})
+        const appointments = await appointmentModel.find({})
+
+        const dashData ={
+            doctors: doctors.length,
+            patient: users.length,
+            appointments: appointments.length,
+            latestAppointments: appointments.reverse().slice(0,5)
+        }
+
+        res.json({success:true, dashData})
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: error.message })
+    }
+}
+export { addDoctor, adminLogin, allDoctors, appointmentsAdmin, appointmentCancel, adminDashboard }
