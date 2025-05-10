@@ -179,7 +179,7 @@ const Appoinment = () => {
             ))}
           </div>
 
-          <button onClick={bookAppointment} className="bg-[#5F6FFF] text-white text-sm font-light px-14 py-3 rounded-full my-6">Book a appointment</button>
+          <button onClick={bookAppointment} className="bg-[#6C63FF] text-white text-sm font-light px-14 py-3 rounded-full my-6">Book a appointment</button>
         </div>
 
         {/* Realated Doctors List */}

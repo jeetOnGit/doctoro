@@ -52,21 +52,21 @@ const About = () => {
         </div>
 
         <div className="flex text-[#5c5c5c] py-8 max-[990px]:flex-wrap max-[990px]:gap-2 justify-center">
-          <div className="border border-[#4b5563] p-16 w-[347px] hover:bg-[#5F6FFF] hover:text-white">
+          <div className="border border-[#4b5563] p-16 w-[347px] hover:bg-[#6C63FF] hover:text-white">
             <h5 className="font-medium mb-5">EFFICIENCY:</h5>
             <p>
               Streamlined appointment scheduling that fits into your busy
               lifestyle.
             </p>
           </div>
-          <div className="border border-[#4b5563] p-16 w-[347px] hover:bg-[#5F6FFF] hover:text-white">
+          <div className="border border-[#4b5563] p-16 w-[347px] hover:bg-[#6C63FF] hover:text-white">
             <h5 className="font-medium mb-5">CONVENIENCE:</h5>
             <p>
               Access to a network of trusted healthcare professionals in your
               area.
             </p>
           </div>
-          <div className="border border-[#4b5563] p-16 w-[347px] hover:bg-[#5F6FFF] hover:text-white">
+          <div className="border border-[#4b5563] p-16 w-[347px] hover:bg-[#6C63FF] hover:text-white">
             <h5 className="font-medium mb-5">PERSONALIZATION:</h5>
             <p>
               Tailored recommendations and reminders to help you stay on top of

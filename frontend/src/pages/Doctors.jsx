@@ -1,14 +1,19 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 // import {localDocs} from '../assets/assets'
 import { AppContext } from "../context/AppContext";
+import ScaleLoader from "react-spinners/ScaleLoader";
+
 const Doctors = () => {
   const navigate = useNavigate()
     const { doctors } = useContext(AppContext);
+    const [color, setColor] = useState("#6C63FF");
   
   return (
     <section className="doctors">
-      <div className="flex gap-x-3 gap-y-[1.5rem] flex-wrap py-8 justify-center">
+      {
+        doctors.length > 0 ? (
+          <div className="flex gap-x-3 gap-y-[1.5rem] flex-wrap py-8 justify-center">
       {
           doctors.map((doc) => (
             <div
@@ -39,6 +44,18 @@ const Doctors = () => {
             </div>
           ))}
       </div>
+        )
+        : (
+          <ScaleLoader
+            className="text-center mt-4 w-full"
+            color={color}
+            loading="true"
+            size={150}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        )
+      }
     </section>
   );
 };

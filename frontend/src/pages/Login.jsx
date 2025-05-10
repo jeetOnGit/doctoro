@@ -83,7 +83,7 @@ const Login = () => {
           />
         </div>
 
-        <button type="submit" className="bg-[#5F6FFF] text-white w-full py-2 rounded-md text-base">
+        <button type="submit" className="bg-[#6C63FF] text-white w-full py-2 rounded-md text-base">
           {state === "sign up" ? "Create Account" : "Login"}
         </button>
         {state === "sign up" ? (
@@ -91,7 +91,7 @@ const Login = () => {
             Already have an account?
             <span
               onClick={() => setState("login")}
-              className="text-[#5f6fff] underline cursor-pointer"
+              className="text-[#6C63FF] underline cursor-pointer"
             >
               Login
             </span>
@@ -101,7 +101,7 @@ const Login = () => {
             Create a new account?
             <span
               onClick={() => setState("sign up")}
-              className="text-[#5f6fff] underline cursor-pointer"
+              className="text-[#6C63FF] underline cursor-pointer"
             >
               click here
             </span>
